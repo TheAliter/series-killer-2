@@ -177,7 +177,7 @@ gh repo create series-killer --public --source=. --remote=origin --push
 
 1. Sign in at [vercel.com](https://vercel.com) and click **Add New… → Project**.
 2. **Import** your GitHub repository (install the Vercel GitHub app if prompted).
-3. Vercel should detect **Vite**; confirm **Build Command** `npm run build` and **Output Directory** `dist` (see [vercel.json](vercel.json) for SPA rewrites).
+3. Vercel should auto-detect the framework; confirm **Build Command** `npm run build` and complete the project import settings.
 4. Under **Environment Variables**, add:
    - `VITE_SUPABASE_URL`
    - `VITE_SUPABASE_ANON_KEY`  

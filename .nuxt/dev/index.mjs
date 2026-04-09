@@ -578,6 +578,15 @@ function cloneWithProxy(obj, overrides) {
 }
 const cachedEventHandler = defineCachedEventHandler;
 
+const defineAppConfig = (config) => config;
+
+const appConfig0 = defineAppConfig({
+  icon: {
+    /** Avoid Nitro 500 when Iconify API is unreachable (offline / firewall). */
+    fallbackToApi: false
+  }
+});
+
 const inlineAppConfig = {
   "nuxt": {},
   "ui": {
@@ -878,9 +887,7 @@ const inlineAppConfig = {
   }
 };
 
-
-
-const appConfig = defuFn(inlineAppConfig);
+const appConfig = defuFn(appConfig0, inlineAppConfig);
 
 function getEnv(key, opts) {
   const envKey = snakeCase(key).toUpperCase();
@@ -2476,16 +2483,16 @@ _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw
 const assets = {
   "/index.mjs": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"1d2f0-SEQcpQnF4ymt7uSF+o2IiNAXsZ4\"",
-    "mtime": "2026-04-09T03:41:44.044Z",
-    "size": 119536,
+    "etag": "\"1d3c9-Zwe3dp+AUK8z9HoEG7PsXdBvnFg\"",
+    "mtime": "2026-04-09T19:23:28.040Z",
+    "size": 119753,
     "path": "index.mjs"
   },
   "/index.mjs.map": {
     "type": "application/json",
-    "etag": "\"6f542-+Reyv1RJfkoqnff9q63U280HUl0\"",
-    "mtime": "2026-04-09T03:41:44.044Z",
-    "size": 456002,
+    "etag": "\"6f8dc-L5thiTAPll+X9OPPlVvL/7R5GeI\"",
+    "mtime": "2026-04-09T19:23:28.041Z",
+    "size": 456924,
     "path": "index.mjs.map"
   }
 };

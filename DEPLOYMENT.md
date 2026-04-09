@@ -21,38 +21,33 @@ Before deploying, make sure you have:
 #### Step-by-step:
 
 1. **Install Vercel CLI**
-   ```bash
+  ```bash
    npm i -g vercel
-   ```
-
+  ```
 2. **Login to Vercel**
-   ```bash
+  ```bash
    vercel login
-   ```
-
+  ```
 3. **Deploy**
-   ```bash
+  ```bash
    npm run deploy
-   ```
-
+  ```
 4. **Follow the prompts:**
-   - Link to existing project? → No
-   - Project name → series-killer (or your preferred name)
-   - Directory → ./ (current directory)
-   - Override settings? → No
-
+  - Link to existing project? → No
+  - Project name → series-killer (or your preferred name)
+  - Directory → ./ (current directory)
+  - Override settings? → No
 5. **Add Environment Variables:**
-   - Go to your Vercel dashboard
-   - Navigate to your project
-   - Go to Settings → Environment Variables
-   - Add:
-     - `VITE_SUPABASE_URL` = your_supabase_project_url
-     - `VITE_SUPABASE_ANON_KEY` = your_supabase_anon_key
-
+  - Go to your Vercel dashboard
+  - Navigate to your project
+  - Go to Settings → Environment Variables
+  - Add:
+    - `VITE_SUPABASE_URL` = your_supabase_project_url
+    - `VITE_SUPABASE_ANON_KEY` = your_supabase_anon_key
 6. **Redeploy with environment variables:**
-   ```bash
+  ```bash
    vercel --prod
-   ```
+  ```
 
 **Your app will be live at:** `https://your-project-name.vercel.app`
 
@@ -66,30 +61,25 @@ Before deploying, make sure you have:
 #### Step-by-step:
 
 1. **Push your code to GitHub**
-
 2. **Go to Netlify:**
-   - Visit [netlify.com](https://netlify.com)
-   - Sign up/Login with GitHub
-
+  - Visit [netlify.com](https://netlify.com)
+  - Sign up/Login with GitHub
 3. **Create new site:**
-   - Click "New site from Git"
-   - Choose GitHub
-   - Select your repository
-
+  - Click "New site from Git"
+  - Choose GitHub
+  - Select your repository
 4. **Configure build settings:**
-   - Build command: `npm run build`
-   - Publish directory: `dist`
-   - Click "Deploy site"
-
+  - Build command: `npm run build`
+  - Publish directory: `dist`
+  - Click "Deploy site"
 5. **Add Environment Variables:**
-   - Go to Site settings → Environment variables
-   - Add:
-     - `VITE_SUPABASE_URL` = your_supabase_project_url
-     - `VITE_SUPABASE_ANON_KEY` = your_supabase_anon_key
-
+  - Go to Site settings → Environment variables
+  - Add:
+    - `VITE_SUPABASE_URL` = your_supabase_project_url
+    - `VITE_SUPABASE_ANON_KEY` = your_supabase_anon_key
 6. **Trigger a new deployment:**
-   - Go to Deploys tab
-   - Click "Trigger deploy" → "Deploy site"
+  - Go to Deploys tab
+  - Click "Trigger deploy" → "Deploy site"
 
 **Your app will be live at:** `https://your-site-name.netlify.app`
 
@@ -103,31 +93,28 @@ Before deploying, make sure you have:
 #### Step-by-step:
 
 1. **Install gh-pages:**
-   ```bash
+  ```bash
    npm install --save-dev gh-pages
-   ```
-
+  ```
 2. **Update package.json:**
-   ```json
+  ```json
    {
      "scripts": {
        "deploy": "npm run build && gh-pages -d dist"
      },
      "homepage": "https://your-username.github.io/series-killer"
    }
-   ```
-
+  ```
 3. **Deploy:**
-   ```bash
+  ```bash
    npm run deploy
-   ```
-
+  ```
 4. **Enable GitHub Pages:**
-   - Go to your GitHub repository
-   - Settings → Pages
-   - Source: Deploy from a branch
-   - Branch: gh-pages
-   - Save
+  - Go to your GitHub repository
+  - Settings → Pages
+  - Source: Deploy from a branch
+  - Branch: gh-pages
+  - Save
 
 **Your app will be live at:** `https://your-username.github.io/series-killer`
 
@@ -141,30 +128,26 @@ Before deploying, make sure you have:
 #### Step-by-step:
 
 1. **Install Firebase CLI:**
-   ```bash
+  ```bash
    npm install -g firebase-tools
-   ```
-
+  ```
 2. **Login to Firebase:**
-   ```bash
+  ```bash
    firebase login
-   ```
-
+  ```
 3. **Initialize Firebase:**
-   ```bash
+  ```bash
    firebase init hosting
-   ```
-
+  ```
 4. **Configure:**
-   - Public directory: `dist`
-   - Single-page app: Yes
-   - GitHub Actions: No
-
+  - Public directory: `dist`
+  - Single-page app: Yes
+  - GitHub Actions: No
 5. **Deploy:**
-   ```bash
+  ```bash
    npm run build
    firebase deploy
-   ```
+  ```
 
 **Your app will be live at:** `https://your-project-id.web.app`
 
@@ -185,29 +168,35 @@ VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 2. Create a new project or use existing
 3. Go to Settings → API
 4. Copy:
-   - Project URL
-   - anon/public key
+  - Project URL
+  - anon/public key
 
 ## 🚨 Common Issues & Solutions
 
 ### Issue: "Page not found" on refresh
+
 **Solution:** This is normal for SPAs. The deployment configs above handle this with redirects.
 
 ### Issue: Environment variables not working
+
 **Solution:** Make sure to add them in your hosting platform's dashboard and redeploy.
 
 ### Issue: Build fails
+
 **Solution:** 
+
 1. Test locally: `npm run build`
 2. Check for TypeScript errors: `npm run type-check`
 3. Make sure all dependencies are installed: `npm install`
 
 ### Issue: CORS errors with Supabase
+
 **Solution:** Add your domain to Supabase Auth → Settings → URL Configuration → Site URL.
 
 ## 📊 Performance Optimization
 
 The build is already optimized with:
+
 - ✅ Code splitting
 - ✅ Tree shaking
 - ✅ Gzip compression
@@ -217,10 +206,12 @@ The build is already optimized with:
 ## 🔄 Continuous Deployment
 
 ### Vercel/Netlify:
+
 - Automatic deployments on every push to main branch
 - Preview deployments for pull requests
 
 ### GitHub Pages:
+
 - Manual deployment required
 - Can be automated with GitHub Actions
 
@@ -229,6 +220,8 @@ The build is already optimized with:
 Once deployed, your Series Killer app will be live and accessible to users worldwide!
 
 Remember to:
+
 - Test all features on the live site
 - Update your README with the live URL
-- Share your creation with the world! 🌍 
+- Share your creation with the world! 🌍
+
