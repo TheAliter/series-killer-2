@@ -4,16 +4,23 @@
   "version": "1.0.0",
   "type": "module",
   "description": "A Vue 3 application for tracking your book series and reading progress",
-  "keywords": ["vue", "books", "series", "reading", "tracker", "supabase"],
+  "keywords": [
+    "vue",
+    "books",
+    "series",
+    "reading",
+    "tracker",
+    "supabase"
+  ],
   "author": "Your Name",
   "license": "MIT",
   "homepage": "https://your-username.github.io/series-killer",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview",
+    "preview": "npm run build && wrangler dev",
     "type-check": "vue-tsc --noEmit",
-    "deploy": "npm run build && vercel --prod"
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.16",
@@ -27,6 +34,7 @@
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.31.2",
     "@tailwindcss/forms": "^0.5.7",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^20.10.5",
@@ -37,6 +45,7 @@
     "tailwindcss": "^3.4.0",
     "typescript": "^5.3.3",
     "vite": "^6.3.5",
-    "vue-tsc": "^2.2.10"
+    "vue-tsc": "^2.2.10",
+    "wrangler": "^4.81.1"
   }
 }
