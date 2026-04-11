@@ -9,6 +9,16 @@ const bookStatus = v.union(
 )
 
 export default defineSchema({
+  userMigrations: defineTable({
+    sourceSupabaseUserId: v.string(),
+    targetUserId: v.string(),
+    email: v.string(),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index('by_source_user', ['sourceSupabaseUserId'])
+    .index('by_target_user', ['targetUserId']),
+
   authors: defineTable({
     userId: v.string(),
     legacyId: v.string(),

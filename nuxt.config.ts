@@ -29,9 +29,9 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      convexUrl: process.env.NUXT_PUBLIC_CONVEX_URL || '',
-      convexSiteUrl: process.env.NUXT_PUBLIC_CONVEX_SITE_URL || '',
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || '',
+      convexUrl: process.env.NUXT_PUBLIC_CONVEX_URL || process.env.CONVEX_URL || '',
+      convexSiteUrl: process.env.NUXT_PUBLIC_CONVEX_SITE_URL || process.env.CONVEX_SITE_URL || '',
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || process.env.SITE_URL || 'http://localhost:3000',
     },
   },
 })

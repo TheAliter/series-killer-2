@@ -21,6 +21,7 @@ export const tables = {
     phoneNumberVerified: v.optional(v.union(v.null(), v.boolean())),
     userId: v.optional(v.union(v.null(), v.string())),
   })
+    .index('email', ['email'])
     .index('email_name', ['email', 'name'])
     .index('name', ['name'])
     .index('userId', ['userId'])

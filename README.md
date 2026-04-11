@@ -56,6 +56,8 @@ Track book series and reading progress. **Nuxt 4**, **Convex**, **Better Auth** 
    - `BETTER_AUTH_SECRET`
    - `SITE_URL` (same origin as above, e.g. `http://localhost:3000`)
    - `CONVEX_SITE_URL` (your `https://…convex.site`)
+   - `RESEND_API_KEY` (for password reset email delivery)
+   - `RESEND_FROM` (optional; defaults to `onboarding@resend.dev`)
 
    See [`env.example`](env.example) for a full checklist.
 
@@ -66,6 +68,15 @@ Track book series and reading progress. **Nuxt 4**, **Convex**, **Better Auth** 
    ```
 
    Open `http://localhost:3000`, sign up, then use the library UI.
+
+## Password reset email (Resend)
+
+1. Set Convex env vars:
+   - `RESEND_API_KEY=re_xxxxxxxxx`
+   - `RESEND_FROM=onboarding@resend.dev` (optional)
+2. Submit an email in `forgot-password`.
+3. Verify the request succeeds and the reset email arrives in the target inbox.
+4. If delivery fails, check Convex logs for the surfaced Resend API error details.
 
 ## Scripts
 
@@ -78,6 +89,24 @@ Track book series and reading progress. **Nuxt 4**, **Convex**, **Better Auth** 
 | `npm run convex:dev` | Convex dev (same as `npx convex dev`) |
 | `npm run convex:deploy` | Deploy Convex functions |
 | `npm run migrate:supabase` | Optional one-off migration from Supabase (needs env vars) |
+
+## One-time Supabase -> Convex migration
+
+1. Set migration env vars (`SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `CONVEX_URL`, `MIGRATION_SECRET`).
+2. Optionally set:
+   - `SOURCE_SUPABASE_USER_ID` to migrate one user only.
+   - `MIGRATION_DRY_RUN=true` for validation without writes.
+   - `MIGRATION_SKIP_PASSWORD_RESET=true` to skip reset requests.
+   - `MIGRATION_RESET_REDIRECT_TO` to override reset URL.
+3. Run:
+   ```bash
+   npm run migrate:supabase
+   ```
+4. Validate the printed migration summary:
+   - `unresolvedOwnerCount` should be `0` (for each table).
+   - `unresolvedAuthorReferenceCount` and `unresolvedSeriesReferenceCount` should be `0`.
+   - `duplicateLegacyCount` should be `0` for clean reruns.
+5. If not skipped, reset requests are issued for imported emails using the Resend-backed `sendResetPassword` handler in `convex/betterAuth/auth.ts`.
 
 ## Deployment
 

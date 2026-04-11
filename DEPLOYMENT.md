@@ -32,6 +32,30 @@ This app is a **Nuxt 4** SPA-oriented client with **Convex** (data + Better Auth
   ```
    Use the **production** deployment URLs for Cloudflare env vars below.
 
+## 1.1 Supabase -> Convex one-time migration
+
+1. Ensure `MIGRATION_SECRET` is set on Convex deployment env.
+2. Export local shell env before running migration:
+   - `SUPABASE_URL`
+   - `SUPABASE_SERVICE_ROLE_KEY`
+   - `CONVEX_URL`
+   - `MIGRATION_SECRET`
+3. Optional migration env:
+   - `SOURCE_SUPABASE_USER_ID` (single-user scoped run)
+   - `MIGRATION_DRY_RUN=true` (validation only)
+   - `MIGRATION_SKIP_PASSWORD_RESET=true` (skip reset requests)
+   - `MIGRATION_RESET_REDIRECT_TO=https://your-app/reset-password`
+4. Run migration:
+   ```bash
+   npm run migrate:supabase
+   ```
+5. Verify migration summary output:
+   - `unresolvedOwnerCount` = `0`
+   - `unresolvedAuthorReferenceCount` = `0`
+   - `unresolvedSeriesReferenceCount` = `0`
+6. Rerun behavior is idempotent for auth/data upserts keyed by source user and per-user legacy IDs.
+7. If password reset is enabled, reset requests are generated for imported users. By default this repo logs reset links from `sendResetPassword`.
+
 ## 2. Local Nuxt + Convex
 
 1. Copy `[env.local.example](env.local.example)` to `.env.local` and fill in `NUXT_PUBLIC_CONVEX_URL`, `NUXT_PUBLIC_CONVEX_SITE_URL`, and `NUXT_PUBLIC_SITE_URL`.
