@@ -1,0 +1,11 @@
+- generic [ref=e5]:
+  - heading "Reset password" [level=1] [ref=e6]
+  - paragraph [ref=e7]: We will email you a link if an account exists.
+  - generic [ref=e8]:
+    - generic [ref=e9]:
+      - generic [ref=e12]: Email*
+      - textbox "Email*" [ref=e15]
+    - button "Send link" [ref=e16]
+  - paragraph [ref=e17]:
+    - link "Back to sign in" [ref=e18] [cursor=pointer]:
+      - /url: /login

@@ -10,7 +10,10 @@ export default defineNuxtPlugin(() => {
   const convexSiteUrl = String(config.public.convexSiteUrl ?? '')
   const siteUrl = String(config.public.siteUrl ?? '').replace(/\/$/, '')
   const authBaseUrl =
-    convexSiteUrl || convexUrl || siteUrl || 'https://convex-auth-not-configured.invalid'
+    convexSiteUrl ||
+    convexUrl ||
+    siteUrl ||
+    (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000')
   const convexUrlConfigured = convexUrl.length > 0
   const skipUrlCheck =
     !convexUrlConfigured ||

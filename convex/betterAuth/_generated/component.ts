@@ -1,6 +1,6 @@
 /* eslint-disable */
 /**
- * Generated `api` utility.
+ * Generated `ComponentApi` utility.
  *
  * THIS CODE IS AUTOMATICALLY GENERATED.
  *
@@ -8,60 +8,21 @@
  * @module
  */
 
-import type * as auth from "../auth.js";
-import type * as authors from "../authors.js";
-import type * as books from "../books.js";
-import type * as http from "../http.js";
-import type * as lib_auth from "../lib/auth.js";
-import type * as lib_mappers from "../lib/mappers.js";
-import type * as library from "../library.js";
-import type * as series from "../series.js";
-
-import type {
-  ApiFromModules,
-  FilterApi,
-  FunctionReference,
-} from "convex/server";
-
-declare const fullApi: ApiFromModules<{
-  auth: typeof auth;
-  authors: typeof authors;
-  books: typeof books;
-  http: typeof http;
-  "lib/auth": typeof lib_auth;
-  "lib/mappers": typeof lib_mappers;
-  library: typeof library;
-  series: typeof series;
-}>;
+import type { FunctionReference } from "convex/server";
 
 /**
- * A utility for referencing Convex functions in your app's public API.
+ * A utility for referencing a Convex component's exposed API.
  *
+ * Useful when expecting a parameter like `components.myComponent`.
  * Usage:
- * ```js
- * const myFunctionReference = api.myModule.myFunction;
+ * ```ts
+ * async function myFunction(ctx: QueryCtx, component: ComponentApi) {
+ *   return ctx.runQuery(component.someFile.someQuery, { ...args });
+ * }
  * ```
  */
-export declare const api: FilterApi<
-  typeof fullApi,
-  FunctionReference<any, "public">
->;
-
-/**
- * A utility for referencing Convex functions in your app's internal API.
- *
- * Usage:
- * ```js
- * const myFunctionReference = internal.myModule.myFunction;
- * ```
- */
-export declare const internal: FilterApi<
-  typeof fullApi,
-  FunctionReference<any, "internal">
->;
-
-export declare const components: {
-  betterAuth: {
+export type ComponentApi<Name extends string | undefined = string | undefined> =
+  {
     adapter: {
       create: FunctionReference<
         "mutation",
@@ -186,7 +147,8 @@ export declare const components: {
           onCreateHandle?: string;
           select?: Array<string>;
         },
-        any
+        any,
+        Name
       >;
       deleteMany: FunctionReference<
         "mutation",
@@ -538,7 +500,8 @@ export declare const components: {
             numItems: number;
           };
         },
-        any
+        any,
+        Name
       >;
       deleteOne: FunctionReference<
         "mutation",
@@ -882,7 +845,8 @@ export declare const components: {
               };
           onDeleteHandle?: string;
         },
-        any
+        any,
+        Name
       >;
       findMany: FunctionReference<
         "query",
@@ -936,7 +900,8 @@ export declare const components: {
               | null;
           }>;
         },
-        any
+        any,
+        Name
       >;
       findOne: FunctionReference<
         "query",
@@ -979,7 +944,8 @@ export declare const components: {
               | null;
           }>;
         },
-        any
+        any,
+        Name
       >;
       updateMany: FunctionReference<
         "mutation",
@@ -1420,7 +1386,8 @@ export declare const components: {
             numItems: number;
           };
         },
-        any
+        any,
+        Name
       >;
       updateOne: FunctionReference<
         "mutation",
@@ -1853,7 +1820,8 @@ export declare const components: {
               };
           onUpdateHandle?: string;
         },
-        any
+        any,
+        Name
       >;
     };
     migration: {
@@ -1861,7 +1829,8 @@ export declare const components: {
         "query",
         "internal",
         { email: string; sourceSupabaseUserId: string },
-        null | { email: string; userId: string }
+        null | { email: string; userId: string },
+        Name
       >;
       patchMigratedUser: FunctionReference<
         "mutation",
@@ -1875,8 +1844,8 @@ export declare const components: {
           updatedAt: number;
           userId: string;
         },
-        { patched: boolean }
+        { patched: boolean },
+        Name
       >;
     };
   };
-};

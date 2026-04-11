@@ -44,6 +44,8 @@ async function onSubmit() {
       return
     }
     message.value = 'If this email is registered, check your inbox for a reset link.'
+  } catch (caughtError) {
+    error.value = caughtError instanceof Error ? caughtError.message : 'Request failed.'
   } finally {
     loading.value = false
   }
