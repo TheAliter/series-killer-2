@@ -26,7 +26,10 @@ declare global {
   const definePayloadPlugin: typeof import('../../node_modules/nuxt/dist/app/nuxt').definePayloadPlugin
   const definePayloadReducer: typeof import('../../node_modules/nuxt/dist/app/composables/payload').definePayloadReducer
   const definePayloadReviver: typeof import('../../node_modules/nuxt/dist/app/composables/payload').definePayloadReviver
+  const defineSharedConvexQuery: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/defineSharedConvexQuery').defineSharedConvexQuery
   const defineShortcuts: typeof import('../../node_modules/@nuxt/ui/dist/runtime/composables/defineShortcuts').defineShortcuts
+  const deleteFromPaginatedQuery: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexPaginatedQuery').deleteFromPaginatedQuery
+  const deleteFromQuery: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexMutation').deleteFromQuery
   const effect: typeof import('../../node_modules/vue').effect
   const effectScope: typeof import('../../node_modules/vue').effectScope
   const extendLocale: typeof import('../../node_modules/@nuxt/ui/dist/runtime/composables/defineLocale').extendLocale
@@ -40,6 +43,9 @@ declare global {
   const hasInjectionContext: typeof import('../../node_modules/vue').hasInjectionContext
   const inject: typeof import('../../node_modules/vue').inject
   const injectHead: typeof import('../../node_modules/nuxt/dist/app/composables/head').injectHead
+  const insertAtBottomIfLoaded: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexPaginatedQuery').insertAtBottomIfLoaded
+  const insertAtPosition: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexPaginatedQuery').insertAtPosition
+  const insertAtTop: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexPaginatedQuery').insertAtTop
   const isNuxtError: typeof import('../../node_modules/nuxt/dist/app/composables/error').isNuxtError
   const isPrerendered: typeof import('../../node_modules/nuxt/dist/app/composables/payload').isPrerendered
   const isProxy: typeof import('../../node_modules/vue').isProxy
@@ -89,6 +95,7 @@ declare global {
   const resolveComponent: typeof import('../../node_modules/vue').resolveComponent
   const setInterval: typeof import('../../node_modules/nuxt/dist/app/compat/interval').setInterval
   const setPageLayout: typeof import('../../node_modules/nuxt/dist/app/composables/router').setPageLayout
+  const setQueryData: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexMutation').setQueryData
   const setResponseStatus: typeof import('../../node_modules/nuxt/dist/app/composables/ssr').setResponseStatus
   const shallowReactive: typeof import('../../node_modules/vue').shallowReactive
   const shallowReadonly: typeof import('../../node_modules/vue').shallowReadonly
@@ -101,13 +108,27 @@ declare global {
   const triggerRef: typeof import('../../node_modules/vue').triggerRef
   const tryUseNuxtApp: typeof import('../../node_modules/nuxt/dist/app/nuxt').tryUseNuxtApp
   const unref: typeof import('../../node_modules/vue').unref
+  const updateAllQueries: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexMutation').updateAllQueries
   const updateAppConfig: typeof import('../../node_modules/nuxt/dist/app/config').updateAppConfig
+  const updateInPaginatedQuery: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexPaginatedQuery').updateInPaginatedQuery
+  const updateQuery: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexMutation').updateQuery
   const useAnnouncer: typeof import('../../node_modules/nuxt/dist/app/composables/announcer').useAnnouncer
   const useAppConfig: typeof import('../../node_modules/nuxt/dist/app/config').useAppConfig
   const useAsyncData: typeof import('../../node_modules/nuxt/dist/app/composables/asyncData').useAsyncData
   const useAttrs: typeof import('../../node_modules/vue').useAttrs
   const useColorMode: typeof import('../../node_modules/@nuxtjs/color-mode/dist/runtime/composables').useColorMode
   const useContentSearch: typeof import('../../node_modules/@nuxt/ui/dist/runtime/composables/useContentSearch').useContentSearch
+  const useConvex: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvex').useConvex
+  const useConvexAction: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexAction').useConvexAction
+  const useConvexAuth: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexAuth').useConvexAuth
+  const useConvexCall: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexCall').useConvexCall
+  const useConvexConnectionState: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexConnectionState').useConvexConnectionState
+  const useConvexFileUpload: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexFileUpload').useConvexFileUpload
+  const useConvexMutation: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexMutation').useConvexMutation
+  const useConvexPaginatedQuery: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexPaginatedQuery').useConvexPaginatedQuery
+  const useConvexQuery: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexQuery').useConvexQuery
+  const useConvexStorageUrl: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexStorageUrl').useConvexStorageUrl
+  const useConvexUploadQueue: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexUploadQueue').useConvexUploadQueue
   const useCookie: typeof import('../../node_modules/nuxt/dist/app/composables/cookie').useCookie
   const useCssModule: typeof import('../../node_modules/vue').useCssModule
   const useCssVars: typeof import('../../node_modules/vue').useCssVars
@@ -236,7 +257,10 @@ declare module 'vue' {
     readonly definePayloadPlugin: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/nuxt')['definePayloadPlugin']>
     readonly definePayloadReducer: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/payload')['definePayloadReducer']>
     readonly definePayloadReviver: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/payload')['definePayloadReviver']>
+    readonly defineSharedConvexQuery: UnwrapRef<typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/defineSharedConvexQuery')['defineSharedConvexQuery']>
     readonly defineShortcuts: UnwrapRef<typeof import('../../node_modules/@nuxt/ui/dist/runtime/composables/defineShortcuts')['defineShortcuts']>
+    readonly deleteFromPaginatedQuery: UnwrapRef<typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexPaginatedQuery')['deleteFromPaginatedQuery']>
+    readonly deleteFromQuery: UnwrapRef<typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexMutation')['deleteFromQuery']>
     readonly effect: UnwrapRef<typeof import('../../node_modules/vue')['effect']>
     readonly effectScope: UnwrapRef<typeof import('../../node_modules/vue')['effectScope']>
     readonly extendLocale: UnwrapRef<typeof import('../../node_modules/@nuxt/ui/dist/runtime/composables/defineLocale')['extendLocale']>
@@ -250,6 +274,9 @@ declare module 'vue' {
     readonly hasInjectionContext: UnwrapRef<typeof import('../../node_modules/vue')['hasInjectionContext']>
     readonly inject: UnwrapRef<typeof import('../../node_modules/vue')['inject']>
     readonly injectHead: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/head')['injectHead']>
+    readonly insertAtBottomIfLoaded: UnwrapRef<typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexPaginatedQuery')['insertAtBottomIfLoaded']>
+    readonly insertAtPosition: UnwrapRef<typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexPaginatedQuery')['insertAtPosition']>
+    readonly insertAtTop: UnwrapRef<typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexPaginatedQuery')['insertAtTop']>
     readonly isNuxtError: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/error')['isNuxtError']>
     readonly isPrerendered: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/payload')['isPrerendered']>
     readonly isProxy: UnwrapRef<typeof import('../../node_modules/vue')['isProxy']>
@@ -299,6 +326,7 @@ declare module 'vue' {
     readonly resolveComponent: UnwrapRef<typeof import('../../node_modules/vue')['resolveComponent']>
     readonly setInterval: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/compat/interval')['setInterval']>
     readonly setPageLayout: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/router')['setPageLayout']>
+    readonly setQueryData: UnwrapRef<typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexMutation')['setQueryData']>
     readonly setResponseStatus: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/ssr')['setResponseStatus']>
     readonly shallowReactive: UnwrapRef<typeof import('../../node_modules/vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('../../node_modules/vue')['shallowReadonly']>
@@ -311,13 +339,27 @@ declare module 'vue' {
     readonly triggerRef: UnwrapRef<typeof import('../../node_modules/vue')['triggerRef']>
     readonly tryUseNuxtApp: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/nuxt')['tryUseNuxtApp']>
     readonly unref: UnwrapRef<typeof import('../../node_modules/vue')['unref']>
+    readonly updateAllQueries: UnwrapRef<typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexMutation')['updateAllQueries']>
     readonly updateAppConfig: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/config')['updateAppConfig']>
+    readonly updateInPaginatedQuery: UnwrapRef<typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexPaginatedQuery')['updateInPaginatedQuery']>
+    readonly updateQuery: UnwrapRef<typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexMutation')['updateQuery']>
     readonly useAnnouncer: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/announcer')['useAnnouncer']>
     readonly useAppConfig: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/config')['useAppConfig']>
     readonly useAsyncData: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/asyncData')['useAsyncData']>
     readonly useAttrs: UnwrapRef<typeof import('../../node_modules/vue')['useAttrs']>
     readonly useColorMode: UnwrapRef<typeof import('../../node_modules/@nuxtjs/color-mode/dist/runtime/composables')['useColorMode']>
     readonly useContentSearch: UnwrapRef<typeof import('../../node_modules/@nuxt/ui/dist/runtime/composables/useContentSearch')['useContentSearch']>
+    readonly useConvex: UnwrapRef<typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvex')['useConvex']>
+    readonly useConvexAction: UnwrapRef<typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexAction')['useConvexAction']>
+    readonly useConvexAuth: UnwrapRef<typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexAuth')['useConvexAuth']>
+    readonly useConvexCall: UnwrapRef<typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexCall')['useConvexCall']>
+    readonly useConvexConnectionState: UnwrapRef<typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexConnectionState')['useConvexConnectionState']>
+    readonly useConvexFileUpload: UnwrapRef<typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexFileUpload')['useConvexFileUpload']>
+    readonly useConvexMutation: UnwrapRef<typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexMutation')['useConvexMutation']>
+    readonly useConvexPaginatedQuery: UnwrapRef<typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexPaginatedQuery')['useConvexPaginatedQuery']>
+    readonly useConvexQuery: UnwrapRef<typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexQuery')['useConvexQuery']>
+    readonly useConvexStorageUrl: UnwrapRef<typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexStorageUrl')['useConvexStorageUrl']>
+    readonly useConvexUploadQueue: UnwrapRef<typeof import('../../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexUploadQueue')['useConvexUploadQueue']>
     readonly useCookie: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/cookie')['useCookie']>
     readonly useCssModule: UnwrapRef<typeof import('../../node_modules/vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('../../node_modules/vue')['useCssVars']>

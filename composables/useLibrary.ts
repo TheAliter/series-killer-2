@@ -1,18 +1,17 @@
-import { useStore } from '@nanostores/vue'
 import type { ConvexClient } from 'convex/browser'
 import { computed, onUnmounted, ref, shallowRef, watch } from 'vue'
 import { api } from '../convex/_generated/api.js'
 import type { Author, Book, Series } from '~/types/library'
 
 export function useLibrary() {
-  const nuxtApp = useNuxtApp()
+  const { isAuthenticated } = useConvexAuth()
+  const convex = import.meta.client ? useConvex() : null
 
   function getConvex(): ConvexClient {
-    const client = nuxtApp.$convex as ConvexClient | undefined
-    if (!client) {
+    if (!convex) {
       throw new Error('Convex client is only available in the browser.')
     }
-    return client
+    return convex
   }
 
   const books = shallowRef<Book[]>([])
@@ -51,7 +50,6 @@ export function useLibrary() {
   let unsubAuthors: { unsubscribe: () => void } | undefined
 
   function subscribeQueries() {
-    const convex = nuxtApp.$convex
     if (!convex) return
     unsubBooks?.unsubscribe()
     unsubSeries?.unsubscribe()
@@ -67,24 +65,21 @@ export function useLibrary() {
     })
   }
 
-  if (import.meta.client && nuxtApp.$authClient) {
-    const session = useStore(nuxtApp.$authClient.useSession)
-    watch(
-      () => Boolean(session.value.data?.session),
-      (signedIn) => {
-        if (signedIn) subscribeQueries()
-        else {
-          books.value = []
-          series.value = []
-          authors.value = []
-          unsubBooks?.unsubscribe()
-          unsubSeries?.unsubscribe()
-          unsubAuthors?.unsubscribe()
-        }
-      },
-      { immediate: true },
-    )
-  }
+  watch(
+    () => Boolean(isAuthenticated.value),
+    (signedIn) => {
+      if (signedIn) subscribeQueries()
+      else {
+        books.value = []
+        series.value = []
+        authors.value = []
+        unsubBooks?.unsubscribe()
+        unsubSeries?.unsubscribe()
+        unsubAuthors?.unsubscribe()
+      }
+    },
+    { immediate: true },
+  )
 
   onUnmounted(() => {
     unsubBooks?.unsubscribe()
@@ -93,7 +88,6 @@ export function useLibrary() {
   })
 
   async function fetchAll() {
-    const convex = nuxtApp.$convex
     if (!convex) return
     loading.value = true
     try {

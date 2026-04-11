@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({ layout: 'default', middleware: 'auth' })
+definePageMeta({ layout: 'default', convexAuth: true })
 
 const library = useLibrary()
 

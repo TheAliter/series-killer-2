@@ -104,6 +104,10 @@ declare global {
   const sendStream: typeof import('../../node_modules/h3').sendStream
   const sendWebResponse: typeof import('../../node_modules/h3').sendWebResponse
   const serveStatic: typeof import('../../node_modules/h3').serveStatic
+  const serverConvexAction: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/server/utils/convex').serverConvexAction
+  const serverConvexClearAuthCache: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/server/utils/auth-cache').serverConvexClearAuthCache
+  const serverConvexMutation: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/server/utils/convex').serverConvexMutation
+  const serverConvexQuery: typeof import('../../node_modules/better-convex-nuxt/dist/runtime/server/utils/convex').serverConvexQuery
   const setCookie: typeof import('../../node_modules/h3').setCookie
   const setHeader: typeof import('../../node_modules/h3').setHeader
   const setHeaders: typeof import('../../node_modules/h3').setHeaders
@@ -147,3 +151,5 @@ export { defineTask, runTask } from 'nitropack/runtime/internal/task';
 export { defineNitroErrorHandler } from 'nitropack/runtime/internal/error/utils';
 export { buildAssetsURL as __buildAssetsURL, publicAssetsURL as __publicAssetsURL } from 'C:/Users/HomePC/Desktop/Projekti/series-killer-2/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths';
 export { defineAppConfig } from 'C:/Users/HomePC/Desktop/Projekti/series-killer-2/node_modules/@nuxt/nitro-server/dist/runtime/utils/config';
+export { serverConvexQuery, serverConvexMutation, serverConvexAction } from 'C:/Users/HomePC/Desktop/Projekti/series-killer-2/node_modules/better-convex-nuxt/dist/runtime/server/utils/convex';
+export { serverConvexClearAuthCache } from 'C:/Users/HomePC/Desktop/Projekti/series-killer-2/node_modules/better-convex-nuxt/dist/runtime/server/utils/auth-cache';

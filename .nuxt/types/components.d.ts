@@ -145,6 +145,10 @@ interface _GlobalComponents {
   UTree: typeof import("../../node_modules/@nuxt/ui/dist/runtime/components/Tree.vue")['default']
   UUser: typeof import("../../node_modules/@nuxt/ui/dist/runtime/components/User.vue")['default']
   ULocaleSelect: typeof import("../../node_modules/@nuxt/ui/dist/runtime/components/locale/LocaleSelect.vue")['default']
+  ConvexAuthError: typeof import("../../node_modules/better-convex-nuxt/dist/runtime/components/ConvexAuthError.vue")['default']
+  ConvexAuthLoading: typeof import("../../node_modules/better-convex-nuxt/dist/runtime/components/ConvexAuthLoading.vue")['default']
+  ConvexAuthenticated: typeof import("../../node_modules/better-convex-nuxt/dist/runtime/components/ConvexAuthenticated.vue")['default']
+  ConvexUnauthenticated: typeof import("../../node_modules/better-convex-nuxt/dist/runtime/components/ConvexUnauthenticated.vue")['default']
   NuxtWelcome: typeof import("../../node_modules/nuxt/dist/app/components/welcome.vue")['default']
   NuxtLayout: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-layout")['default']
   NuxtErrorBoundary: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-error-boundary.vue")['default']
@@ -302,6 +306,10 @@ interface _GlobalComponents {
   LazyUTree: LazyComponent<typeof import("../../node_modules/@nuxt/ui/dist/runtime/components/Tree.vue")['default']>
   LazyUUser: LazyComponent<typeof import("../../node_modules/@nuxt/ui/dist/runtime/components/User.vue")['default']>
   LazyULocaleSelect: LazyComponent<typeof import("../../node_modules/@nuxt/ui/dist/runtime/components/locale/LocaleSelect.vue")['default']>
+  LazyConvexAuthError: LazyComponent<typeof import("../../node_modules/better-convex-nuxt/dist/runtime/components/ConvexAuthError.vue")['default']>
+  LazyConvexAuthLoading: LazyComponent<typeof import("../../node_modules/better-convex-nuxt/dist/runtime/components/ConvexAuthLoading.vue")['default']>
+  LazyConvexAuthenticated: LazyComponent<typeof import("../../node_modules/better-convex-nuxt/dist/runtime/components/ConvexAuthenticated.vue")['default']>
+  LazyConvexUnauthenticated: LazyComponent<typeof import("../../node_modules/better-convex-nuxt/dist/runtime/components/ConvexUnauthenticated.vue")['default']>
   LazyNuxtWelcome: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/welcome.vue")['default']>
   LazyNuxtLayout: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/nuxt-layout")['default']>
   LazyNuxtErrorBoundary: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/nuxt-error-boundary.vue")['default']>

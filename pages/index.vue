@@ -46,7 +46,7 @@ import type { Book, Series } from '~/types/library'
 
 definePageMeta({
   layout: 'default',
-  middleware: 'auth',
+  convexAuth: true,
 })
 
 const library = useLibrary()

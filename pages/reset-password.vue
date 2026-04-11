@@ -27,7 +27,7 @@
 definePageMeta({ layout: 'auth' })
 
 const route = useRoute()
-const { $authClient } = useNuxtApp()
+const { client } = useConvexAuth()
 
 const token = computed(() => {
   const q = route.query.token
@@ -40,16 +40,20 @@ const loading = ref(false)
 
 async function onSubmit() {
   error.value = ''
+  if (!client) {
+    error.value = 'Auth client is not ready yet. Please refresh and try again.'
+    return
+  }
   if (form.password !== form.confirm) {
     error.value = 'Passwords do not match.'
     return
   }
   loading.value = true
   try {
-    const res = (await $authClient.resetPassword({
+    const res = await client.resetPassword({
       newPassword: form.password,
       token: token.value,
-    })) as { error?: { message?: string } }
+    })
     if (res.error) {
       error.value = res.error.message || 'Could not reset password.'
       return

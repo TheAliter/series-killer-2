@@ -128,7 +128,7 @@
         "./color-mode-options.mjs"
       ],
       "#app-manifest": [
-        "./manifest/meta/44d5b7b4-a3d7-436a-b12e-c78156bd840c.json"
+        "./manifest/meta/5cb1495b-2d96-49b2-88c1-9e671481d8b6.json"
       ],
       "#components": [
         "./components"
@@ -199,6 +199,7 @@
     "../node_modules",
     "../node_modules/nuxt/node_modules",
     "../node_modules/@nuxt/ui/node_modules",
+    "../node_modules/better-convex-nuxt/node_modules",
     "../node_modules/@nuxt/devtools/node_modules",
     "../node_modules/@nuxt/telemetry/node_modules",
     "../node_modules/@nuxt/icon/node_modules",

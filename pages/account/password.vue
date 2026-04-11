@@ -21,26 +21,30 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({ layout: 'default', middleware: 'auth' })
+definePageMeta({ layout: 'default', convexAuth: true })
 
-const { $authClient } = useNuxtApp()
+const { client } = useConvexAuth()
 const form = reactive({ current: '', next: '', confirm: '' })
 const error = ref('')
 const loading = ref(false)
 
 async function onSubmit() {
   error.value = ''
+  if (!client) {
+    error.value = 'Auth client is not ready yet. Please refresh and try again.'
+    return
+  }
   if (form.next !== form.confirm) {
     error.value = 'New passwords do not match.'
     return
   }
   loading.value = true
   try {
-    const res = (await $authClient.changePassword({
+    const res = await client.changePassword({
       currentPassword: form.current,
       newPassword: form.next,
       revokeOtherSessions: false,
-    })) as { error?: { message?: string } }
+    })
     if (res.error) {
       error.value = res.error.message || 'Could not change password.'
       return

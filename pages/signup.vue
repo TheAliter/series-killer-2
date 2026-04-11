@@ -19,23 +19,33 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({ layout: 'auth', middleware: 'guest' })
+definePageMeta({ layout: 'auth' })
 
-const { $authClient } = useNuxtApp()
+const { signUp, isAuthenticated } = useConvexAuth()
 const form = reactive({ email: '', password: '' })
 const error = ref('')
 const loading = ref(false)
+
+watch(
+  isAuthenticated,
+  (authenticated) => {
+    if (authenticated) {
+      navigateTo('/')
+    }
+  },
+  { immediate: true },
+)
 
 async function onSubmit() {
   error.value = ''
   loading.value = true
   try {
     const name = form.email.split('@')[0] || 'Reader'
-    const res = (await $authClient.signUp.email({
+    const res = await signUp.email({
       email: form.email,
       password: form.password,
       name,
-    })) as { error?: { message?: string } }
+    })
     if (res.error) {
       error.value = res.error.message || 'Sign up failed.'
       return

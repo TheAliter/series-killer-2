@@ -9,6 +9,12 @@ declare module "nitropack/types" {
     '/__nuxt_island/**': {
       'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/#internal/nuxt/island-renderer').default>>>>
     }
+    '/api/auth': {
+      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/better-convex-nuxt/dist/runtime/server/api/auth/[...]').default>>>>
+    }
+    '/api/auth/**': {
+      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/better-convex-nuxt/dist/runtime/server/api/auth/[...]').default>>>>
+    }
     '/api/_nuxt_icon/:collection': {
       'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxt/icon/dist/runtime/server/api').default>>>>
     }

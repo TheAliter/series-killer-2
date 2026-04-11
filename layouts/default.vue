@@ -30,10 +30,10 @@
 </template>
 
 <script setup lang="ts">
-const { $authClient } = useNuxtApp()
+const { signOut: signOutFromAuth } = useConvexAuth()
 
 async function signOut() {
-  await $authClient.signOut()
+  await signOutFromAuth()
   await navigateTo('/login')
 }
 </script>

@@ -44,4 +44,16 @@ export { useResizable } from '../node_modules/@nuxt/ui/dist/runtime/composables/
 export { useScrollShadow } from '../node_modules/@nuxt/ui/dist/runtime/composables/useScrollShadow';
 export { useScrollspy } from '../node_modules/@nuxt/ui/dist/runtime/composables/useScrollspy';
 export { useToast } from '../node_modules/@nuxt/ui/dist/runtime/composables/useToast';
+export { useConvex } from '../node_modules/better-convex-nuxt/dist/runtime/composables/useConvex';
+export { useConvexMutation, updateQuery, setQueryData, updateAllQueries, deleteFromQuery } from '../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexMutation';
+export { useConvexAction } from '../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexAction';
+export { useConvexQuery } from '../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexQuery';
+export { defineSharedConvexQuery } from '../node_modules/better-convex-nuxt/dist/runtime/composables/defineSharedConvexQuery';
+export { useConvexCall } from '../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexCall';
+export { useConvexPaginatedQuery, insertAtTop, insertAtPosition, insertAtBottomIfLoaded, updateInPaginatedQuery, deleteFromPaginatedQuery } from '../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexPaginatedQuery';
+export { useConvexConnectionState } from '../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexConnectionState';
+export { useConvexFileUpload } from '../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexFileUpload';
+export { useConvexUploadQueue } from '../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexUploadQueue';
+export { useConvexStorageUrl } from '../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexStorageUrl';
+export { useConvexAuth } from '../node_modules/better-convex-nuxt/dist/runtime/composables/useConvexAuth';
 export { useColorMode } from '../node_modules/@nuxtjs/color-mode/dist/runtime/composables';
