@@ -119,7 +119,9 @@ async function sendPasswordResetEmailWithResend({
 }
 
 export const createAuthOptions = (ctx: GenericCtx<DataModel>) => {
-  const siteUrl = trimTrailingSlash(process.env.SITE_URL ?? 'http://localhost:3000')
+  const siteUrl = trimTrailingSlash(
+    process.env.SITE_URL ?? process.env.NUXT_PUBLIC_SITE_URL ?? 'http://localhost:3000',
+  )
   const convexSiteUrl = trimTrailingSlash(process.env.CONVEX_SITE_URL ?? '')
   const localDevOrigins = ['http://localhost:3000', 'http://localhost:3001']
   const additionalTrustedOrigins = parseTrustedOrigins(
