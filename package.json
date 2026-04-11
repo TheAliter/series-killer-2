@@ -12,7 +12,8 @@
     "typecheck": "nuxt typecheck",
     "migrate:supabase": "node scripts/migrate-from-supabase.mjs",
     "convex:dev": "convex dev",
-    "convex:deploy": "convex deploy"
+    "convex:deploy": "convex deploy",
+    "convex:auth-schema": "npx @better-auth/cli generate --config ./convex/betterAuth/auth.ts --output ./convex/betterAuth/schema.ts -y"
   },
   "dependencies": {
     "@convex-dev/better-auth": "^0.11.4",

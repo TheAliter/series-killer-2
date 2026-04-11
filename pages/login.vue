@@ -42,6 +42,9 @@ async function onSubmit() {
       return
     }
     await navigateTo('/')
+  } catch {
+    error.value =
+      'Could not reach the sign-in service. Check your network and Convex / auth URL configuration.'
   } finally {
     loading.value = false
   }

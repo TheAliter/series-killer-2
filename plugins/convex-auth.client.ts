@@ -6,19 +6,26 @@ import { watch } from 'vue'
 
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig()
-  const convexUrl = String(config.public.convexUrl ?? '')
+  const convexUrl = String(config.public.convexUrl ?? '').trim()
   const convexSiteUrl = String(config.public.convexSiteUrl ?? '')
   const siteUrl = String(config.public.siteUrl ?? '').replace(/\/$/, '')
   const authBaseUrl =
     convexSiteUrl || convexUrl || siteUrl || 'https://convex-auth-not-configured.invalid'
+  const convexUrlConfigured = convexUrl.length > 0
   const skipUrlCheck =
-    !convexUrl ||
+    !convexUrlConfigured ||
     convexUrl.includes('placeholder') ||
     convexUrl.includes('localhost')
 
-  const convex = new ConvexClient(convexUrl || 'https://placeholder.convex.cloud', {
-    skipConvexDeploymentUrlCheck: skipUrlCheck,
-  })
+  // A real deployment URL is required to open a sync connection; a fake host like
+  // placeholder.convex.cloud throws "[CONVEX FATAL ERROR] Couldn't parse deployment name".
+  const convex = new ConvexClient(
+    convexUrlConfigured ? convexUrl : 'https://convex-not-configured.invalid',
+    {
+      disabled: !convexUrlConfigured,
+      skipConvexDeploymentUrlCheck: skipUrlCheck,
+    },
+  )
 
   const authClient = createAuthClient({
     baseURL: authBaseUrl,
