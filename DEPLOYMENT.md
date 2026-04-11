@@ -1,234 +1,84 @@
-# 🚀 Deployment Guide
+# Deployment: Convex, Better Auth, and Cloudflare Pages
 
-This guide will help you deploy Series Killer to various platforms.
+This app is a **Nuxt 4** SPA-oriented client with **Convex** (data + Better Auth HTTP routes on `.site`) and **Cloudflare Pages** (`nitro.preset: cloudflare_pages`). Ignore any older copies of this file that mentioned Supabase or Vite.
 
-## 📋 Pre-deployment Checklist
+## Architecture (short)
 
-Before deploying, make sure you have:
+- **Frontend:** Cloudflare Pages serves the Nuxt build. Users’ origin must match `NUXT_PUBLIC_SITE_URL` and Convex `SITE_URL`.
+- **Auth HTTP:** Better Auth runs on Convex; the browser calls `https://<deployment>.convex.site/api/auth/`*.
+- **Convex sync:** Realtime queries/mutations use `https://<deployment>.convex.cloud`.
 
-- ✅ [ ] A Supabase project set up
-- ✅ [ ] Environment variables configured
-- ✅ [ ] Your code pushed to a Git repository (GitHub, GitLab, etc.)
-- ✅ [ ] Node.js 18+ installed locally
+## 1. Convex: link, env, deploy
 
-## 🌐 Deployment Options
+1. Install dependencies and start the Convex dev loop (keep it running while developing):
+  ```bash
+   npm install
+   npx convex dev
+  ```
+   Follow the CLI to log in, create or select a project, and link this repo. That updates local Convex config and generated types.
+2. Set **deployment environment variables** (Convex Dashboard → your deployment → Settings → Environment Variables, or `npx convex env set`):
 
-### Option 1: Vercel (Recommended) ⭐
+  | Variable             | Purpose                                                                                                                                                                                                              |
+  | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | `BETTER_AUTH_SECRET` | Long random secret for Better Auth. Example: `npx convex env set BETTER_AUTH_SECRET "paste-a-long-random-string"`                                                                                                    |
+  | `SITE_URL`           | Exact origin users use: `http://localhost:3000` for local dev, or `https://your-app.pages.dev` (or custom domain) in production.                                                                                     |
+  | `CONVEX_SITE_URL`    | `https://<your-deployment>.convex.site` — used as the public Better Auth base (`…/api/auth`).                                                                                                                        |
+  | `JWKS`               | *Optional.* If unset, `convex/auth.config.ts` uses an empty provider config (same idea as [Convex + Better Auth](https://labs.convex.dev/better-auth)). Set only if you follow docs that require a JWKS JSON string. |
+  | `MIGRATION_SECRET`   | *Optional.* Only for `scripts/migrate-from-supabase.mjs`.                                                                                                                                                            |
 
-**Pros:** Free, automatic deployments, great performance, easy setup
-**Cons:** None for this use case
+3. Deploy Convex functions to production when ready:
+  ```bash
+   npm run convex:deploy
+  ```
+   Use the **production** deployment URLs for Cloudflare env vars below.
 
-#### Step-by-step:
+## 2. Local Nuxt + Convex
 
-1. **Install Vercel CLI**
-   ```bash
-   npm i -g vercel
-   ```
+1. Copy `[env.local.example](env.local.example)` to `.env.local` and fill in `NUXT_PUBLIC_CONVEX_URL`, `NUXT_PUBLIC_CONVEX_SITE_URL`, and `NUXT_PUBLIC_SITE_URL`.
+2. Run two terminals:
+  - `npx convex dev`
+  - `npm run dev`
+3. **Password reset:** `sendResetPassword` in `convex/betterAuth/auth.ts` only logs the link to the Convex dashboard logs. Wire a real email provider when you need production password reset.
 
-2. **Login to Vercel**
-   ```bash
-   vercel login
-   ```
+## 3. Cloudflare Pages
 
-3. **Deploy**
-   ```bash
-   npm run deploy
-   ```
-
-4. **Follow the prompts:**
-   - Link to existing project? → No
-   - Project name → series-killer (or your preferred name)
-   - Directory → ./ (current directory)
-   - Override settings? → No
-
-5. **Add Environment Variables:**
-   - Go to your Vercel dashboard
-   - Navigate to your project
-   - Go to Settings → Environment Variables
-   - Add:
-     - `VITE_SUPABASE_URL` = your_supabase_project_url
-     - `VITE_SUPABASE_ANON_KEY` = your_supabase_anon_key
-
-6. **Redeploy with environment variables:**
-   ```bash
-   vercel --prod
-   ```
-
-**Your app will be live at:** `https://your-project-name.vercel.app`
-
----
-
-### Option 2: Netlify
-
-**Pros:** Free, automatic deployments, great for static sites
-**Cons:** Slightly more complex setup
-
-#### Step-by-step:
-
-1. **Push your code to GitHub**
-
-2. **Go to Netlify:**
-   - Visit [netlify.com](https://netlify.com)
-   - Sign up/Login with GitHub
-
-3. **Create new site:**
-   - Click "New site from Git"
-   - Choose GitHub
-   - Select your repository
-
-4. **Configure build settings:**
-   - Build command: `npm run build`
-   - Publish directory: `dist`
-   - Click "Deploy site"
-
-5. **Add Environment Variables:**
-   - Go to Site settings → Environment variables
-   - Add:
-     - `VITE_SUPABASE_URL` = your_supabase_project_url
-     - `VITE_SUPABASE_ANON_KEY` = your_supabase_anon_key
-
-6. **Trigger a new deployment:**
-   - Go to Deploys tab
-   - Click "Trigger deploy" → "Deploy site"
-
-**Your app will be live at:** `https://your-site-name.netlify.app`
-
----
-
-### Option 3: GitHub Pages
-
-**Pros:** Free, integrated with GitHub
-**Cons:** Requires manual deployment, no environment variables support
-
-#### Step-by-step:
-
-1. **Install gh-pages:**
-   ```bash
-   npm install --save-dev gh-pages
-   ```
-
-2. **Update package.json:**
-   ```json
-   {
-     "scripts": {
-       "deploy": "npm run build && gh-pages -d dist"
-     },
-     "homepage": "https://your-username.github.io/series-killer"
-   }
-   ```
-
-3. **Deploy:**
-   ```bash
-   npm run deploy
-   ```
-
-4. **Enable GitHub Pages:**
-   - Go to your GitHub repository
-   - Settings → Pages
-   - Source: Deploy from a branch
-   - Branch: gh-pages
-   - Save
-
-**Your app will be live at:** `https://your-username.github.io/series-killer`
-
----
-
-### Option 4: Firebase Hosting
-
-**Pros:** Google's infrastructure, good performance
-**Cons:** Requires Google account, slightly more complex
-
-#### Step-by-step:
-
-1. **Install Firebase CLI:**
-   ```bash
-   npm install -g firebase-tools
-   ```
-
-2. **Login to Firebase:**
-   ```bash
-   firebase login
-   ```
-
-3. **Initialize Firebase:**
-   ```bash
-   firebase init hosting
-   ```
-
-4. **Configure:**
-   - Public directory: `dist`
-   - Single-page app: Yes
-   - GitHub Actions: No
-
-5. **Deploy:**
-   ```bash
+1. Connect the Git repository and create a Pages project.
+2. **Build configuration**
+  - Build command: `npm run build`
+  - Build output directory: `**dist`**  
+  (Confirmed for Nuxt 4.4 + Nitro `cloudflare-pages`: Nitro prints `Generated public dist` and `wrangler pages deploy dist`.)
+3. **Environment variables** (Pages → Settings → Environment variables), for **Production** (and Preview if you use previews):
+  - `NUXT_PUBLIC_CONVEX_URL` = `https://<deployment>.convex.cloud`
+  - `NUXT_PUBLIC_CONVEX_SITE_URL` = `https://<deployment>.convex.site`
+  - `NUXT_PUBLIC_SITE_URL` = your real site origin (e.g. `https://<project>.pages.dev` or custom domain)
+4. After the first production URL is known, set Convex `**SITE_URL`** to that same origin and redeploy Convex if needed so `trustedOrigins` and cross-domain auth stay aligned.
+5. Optional local preview of the Pages bundle:
+  ```bash
    npm run build
-   firebase deploy
-   ```
+   npx wrangler pages dev dist
+  ```
 
-**Your app will be live at:** `https://your-project-id.web.app`
+## 4. Troubleshooting
 
----
 
-## 🔧 Environment Variables
+| Symptom                             | What to check                                                                                                |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Sign-in network / “could not reach” | `NUXT_PUBLIC_CONVEX_SITE_URL`, Convex deploy, and that HTTP routes are deployed (`convex/http.ts`).          |
+| Convex `Unauthorized` on data       | Session token / `convex.setAuth` in `plugins/convex-auth.client.ts`; Convex auth config.                     |
+| CORS or cookies                     | `SITE_URL` and `CONVEX_SITE_URL` on Convex match real origins; `NUXT_PUBLIC_SITE_URL` matches the Pages URL. |
 
-All platforms require these environment variables:
 
-```env
-VITE_SUPABASE_URL=your_supabase_project_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+## 5. Maintaining Better Auth schema
+
+When you change Better Auth options in `convex/betterAuth/auth.ts`, regenerate the component schema:
+
+```bash
+npm run convex:auth-schema
 ```
 
-### How to get Supabase credentials:
+## Further reference
 
-1. Go to [supabase.com](https://supabase.com)
-2. Create a new project or use existing
-3. Go to Settings → API
-4. Copy:
-   - Project URL
-   - anon/public key
+- [Convex + Better Auth (labs)](https://labs.convex.dev/better-auth)
+- [Better Auth Convex integration](https://www.better-auth.com/docs/integrations/convex)
+- [Convex docs](https://docs.convex.dev/home)
 
-## 🚨 Common Issues & Solutions
-
-### Issue: "Page not found" on refresh
-**Solution:** This is normal for SPAs. The deployment configs above handle this with redirects.
-
-### Issue: Environment variables not working
-**Solution:** Make sure to add them in your hosting platform's dashboard and redeploy.
-
-### Issue: Build fails
-**Solution:** 
-1. Test locally: `npm run build`
-2. Check for TypeScript errors: `npm run type-check`
-3. Make sure all dependencies are installed: `npm install`
-
-### Issue: CORS errors with Supabase
-**Solution:** Add your domain to Supabase Auth → Settings → URL Configuration → Site URL.
-
-## 📊 Performance Optimization
-
-The build is already optimized with:
-- ✅ Code splitting
-- ✅ Tree shaking
-- ✅ Gzip compression
-- ✅ Asset caching
-- ✅ Vendor chunk separation
-
-## 🔄 Continuous Deployment
-
-### Vercel/Netlify:
-- Automatic deployments on every push to main branch
-- Preview deployments for pull requests
-
-### GitHub Pages:
-- Manual deployment required
-- Can be automated with GitHub Actions
-
-## 🎉 Success!
-
-Once deployed, your Series Killer app will be live and accessible to users worldwide!
-
-Remember to:
-- Test all features on the live site
-- Update your README with the live URL
-- Share your creation with the world! 🌍 

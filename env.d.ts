@@ -2,15 +2,16 @@
 
 declare module '*.vue' {
   import type { DefineComponent } from 'vue'
-  const component: DefineComponent<{}, {}, any>
+  const component: DefineComponent<{}, {}, unknown>
   export default component
 }
 
-interface ImportMetaEnv {
-  readonly VITE_SUPABASE_URL: string
-  readonly VITE_SUPABASE_ANON_KEY: string
+declare module 'nuxt/schema' {
+  interface PublicRuntimeConfig {
+    convexUrl: string
+    convexSiteUrl: string
+    siteUrl: string
+  }
 }
 
-interface ImportMeta {
-  readonly env: ImportMetaEnv
-} 
+export {}
