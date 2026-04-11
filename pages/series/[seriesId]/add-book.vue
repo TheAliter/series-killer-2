@@ -18,7 +18,7 @@
 import { computed } from 'vue'
 import type { BookFormData } from '~/types/library'
 
-definePageMeta({ layout: 'default', middleware: 'auth' })
+definePageMeta({ layout: 'default', convexAuth: true })
 
 const route = useRoute()
 const library = useLibrary()

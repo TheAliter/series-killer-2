@@ -22,21 +22,31 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({ layout: 'auth', middleware: 'guest' })
+definePageMeta({ layout: 'auth' })
 
-const { $authClient } = useNuxtApp()
+const { signIn, isAuthenticated } = useConvexAuth()
 const form = reactive({ email: '', password: '' })
 const error = ref('')
 const loading = ref(false)
+
+watch(
+  isAuthenticated,
+  (authenticated) => {
+    if (authenticated) {
+      navigateTo('/')
+    }
+  },
+  { immediate: true },
+)
 
 async function onSubmit() {
   error.value = ''
   loading.value = true
   try {
-    const res = (await $authClient.signIn.email({
+    const res = await signIn.email({
       email: form.email,
       password: form.password,
-    })) as { error?: { message?: string } }
+    })
     if (res.error) {
       error.value = res.error.message || 'Sign in failed.'
       return

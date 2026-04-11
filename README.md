@@ -47,15 +47,15 @@ Track book series and reading progress. **Nuxt 4**, **Convex**, **Better Auth** 
 
    Copy [`env.local.example`](env.local.example) to `.env.local` and set:
 
-   - `NUXT_PUBLIC_CONVEX_URL` — `https://<deployment>.convex.cloud`
-   - `NUXT_PUBLIC_CONVEX_SITE_URL` — `https://<deployment>.convex.site`
-   - `NUXT_PUBLIC_SITE_URL` — `http://localhost:3000` for local dev
+   - `CONVEX_URL` — `https://<deployment>.convex.cloud`
+   - `CONVEX_SITE_URL` — optional custom HTTP Actions domain override
+   - `NUXT_PUBLIC_SITE_URL` — optional app origin helper (for local dev: `http://localhost:3000`)
 
    On the **Convex** deployment (dashboard or `npx convex env set`), set at least:
 
    - `BETTER_AUTH_SECRET`
    - `SITE_URL` (same origin as above, e.g. `http://localhost:3000`)
-   - `CONVEX_SITE_URL` (your `https://…convex.site`)
+   - `CONVEX_SITE_URL` (optional; only for custom HTTP Actions domains)
    - `RESEND_API_KEY` (for password reset email delivery)
    - `RESEND_FROM` (optional; defaults to `onboarding@resend.dev`)
 

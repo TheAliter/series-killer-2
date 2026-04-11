@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-definePageMeta({ layout: 'default', middleware: 'auth' })
+definePageMeta({ layout: 'default', convexAuth: true })
 
 const route = useRoute()
 const library = useLibrary()

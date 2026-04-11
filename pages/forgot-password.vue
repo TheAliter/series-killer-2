@@ -19,26 +19,40 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({ layout: 'auth', middleware: 'guest' })
+definePageMeta({ layout: 'auth' })
 
 const config = useRuntimeConfig()
-const { $authClient } = useNuxtApp()
+const { client, isAuthenticated } = useConvexAuth()
 const form = reactive({ email: '' })
 const error = ref('')
 const message = ref('')
 const loading = ref(false)
 
+watch(
+  isAuthenticated,
+  (authenticated) => {
+    if (authenticated) {
+      navigateTo('/')
+    }
+  },
+  { immediate: true },
+)
+
 async function onSubmit() {
   error.value = ''
   message.value = ''
+  if (!client) {
+    error.value = 'Auth client is not ready yet. Please refresh and try again.'
+    return
+  }
   loading.value = true
   try {
     const siteUrl = String(config.public.siteUrl || '').replace(/\/$/, '') || ''
     const redirectTo = siteUrl ? `${siteUrl}/reset-password` : undefined
-    const res = (await $authClient.requestPasswordReset({
+    const res = await client.requestPasswordReset({
       email: form.email,
       redirectTo,
-    })) as { error?: { message?: string } }
+    })
     if (res.error) {
       error.value = res.error.message || 'Request failed.'
       return
